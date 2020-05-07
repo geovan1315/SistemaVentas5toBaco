@@ -1,25 +1,19 @@
 <?php
-	$user=array("amilcar","sofia","megan");
-	$pass=array(123,456,789);
+	include ('Conexion.php');
 
-	$estado=false;
+	$con=new Conexion();
 
-	$nombre=$_POST['nombre'];
-	$password=$_POST['pass'];
+	$user=$_POST['nombre'];
+	$password=$_POST['password'];
 
-	$tam=count($user);
+	$query="SELECT * FROM `user` WHERE user='$user' AND password='$password'";
+	$usuario=$con->query($query);
+	$con->close();
+	
 
-	for($x=0; $x<$tam;$x++)
+	if($usuario->num_rows==1)
 	{
-		if($user[$x]==$nombre && $pass[$x]==$password)
-		{
-			$estado=true;
-		}
-	}
-
-	if($estado)
-	{
-		header("location:ventas.html");
+		header("location:ventas.php");
 	}
 	else 
 	{
